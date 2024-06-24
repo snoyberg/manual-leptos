@@ -16,5 +16,8 @@ fn App() -> impl IntoView {
 
 #[component]
 fn SayHi(#[prop(into)] name: Signal<Option<String>>) -> impl IntoView {
-    view! { <p>Hello, <b>{name}</b></p> }
+    match name() {
+        Some(name) => view! { <p>Hello, <b>{name}</b></p> },
+        None => view! { <p>No name selected</p> },
+    }
 }
