@@ -16,12 +16,12 @@ fn App() -> impl IntoView {
 
 #[component]
 fn SayHi(#[prop(into)] name: Signal<Option<String>>) -> impl IntoView {
-    let is_set = create_memo(move |_| name().is_some());
-    move || {
-        if is_set() {
-            view! { <p>Hello, <b>{name}</b></p> }
-        } else {
-            view! { <p>No name selected</p> }
-        }
+    view! {
+        <Show
+            when=move || name().is_some()
+            fallback=|| view! { <p>No name selected</p> }
+        >
+            <p>Hello, <b>{name}</b></p>
+        </Show>
     }
 }
