@@ -6,15 +6,15 @@ fn main() {
 
 #[component]
 fn App() -> impl IntoView {
-    let (name, set_name) = create_signal("Alice".to_owned());
-    let change_name = move |_| set_name("Bob".to_owned());
+    let (name, set_name) = create_signal(None);
     view! {
         <SayHi name />
-        <button on:click=change_name>Say hi to Bob!</button>
+        <button on:click=move |_| set_name(Some("Alice".to_owned()))>Say hi to Alice!</button>
+        <button on:click=move |_| set_name(Some("Bob".to_owned()))>Say hi to Bob!</button>
     }
 }
 
 #[component]
-fn SayHi(#[prop(into)] name: Signal<String>) -> impl IntoView {
+fn SayHi(#[prop(into)] name: Signal<Option<String>>) -> impl IntoView {
     view! { <p>Hello, <b>{name}</b></p> }
 }
